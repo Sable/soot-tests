@@ -14,7 +14,7 @@ wget -P $TMP_DIR http://vandyk.st.informatik.tu-darmstadt.de/abc/sootclasses.jar
 
 # run
 R=0
-./${COMMONS_IO}/runSequentialy.sh  $SOOT_JAR $ANDROID_JARS
+./${COMMONS_IO}/runSequential.sh  $SOOT_JAR $ANDROID_JARS
 R=$(($? + $R))
 echo $R > ./${COMMONS_IO}.status
 
