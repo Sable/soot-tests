@@ -3,7 +3,7 @@
 TMP_DIR=`pwd`"/tmp/"
 SOOT_URL="https://ssebuild.cased.de/nightly/soot/lib/soot-trunk.jar"
 SOOT_JAR=${TMP_DIR}/"`basename $SOOT_URL`"
-ANOROID_JARS="/opt/android-platforms/"
+ANDROID_JARS="/opt/android-platforms/"
 
 COMMONS_IO="commons-io"
 
