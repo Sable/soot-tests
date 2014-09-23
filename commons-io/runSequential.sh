@@ -6,9 +6,9 @@ ANDROID_JARS=$2
 
 # setup
 
-rm "${TARGET}.coffi.out"
-rm "${TARGET}.asm.out"
-rm "${TARGET}.dexpler.out"
+rm -f "${TARGET}.coffi.out"
+rm -f "${TARGET}.asm.out"
+rm -f "${TARGET}.dexpler.out"
 
 # run
 R=0
