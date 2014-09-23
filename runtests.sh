@@ -8,14 +8,17 @@ ANOROID_JARS="/opt/android-platforms/"
 COMMONS_IO="commons-io"
 
 # setup 
+rm -f *.status
 rm -rf $TMP_DIR
 wget -P $TMP_DIR http://vandyk.st.informatik.tu-darmstadt.de/abc/sootclasses.jar
 
 
 # run
 R=0
-./${COMMONS_IO}/runSequential.sh  $SOOT_JAR $ANDROID_JARS
+cd ./${COMMONS_IO}
+./runSequential.sh  $SOOT_JAR $ANDROID_JARS
 R=$(($? + $R))
+cd ..
 echo $R > ./${COMMONS_IO}.status
 
 # clean
