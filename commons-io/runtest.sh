@@ -2,8 +2,8 @@
 
 
 TEST_TARGET=$1   # component to test, e.g., "coffi", "asm", ...
-ANDROID_JARS=$2  # path to Android jars, e.g., "/a/b/c/platforms/"
-SOOT_JAR=$3      # path to Soot jar, e.g, "/d/e/f/soot-trunk.jar"
+SOOT_JAR=$2      # path to Soot jar, e.g, "/d/e/f/soot-trunk.jar"
+ANDROID_JARS=$3  # path to Android jars, e.g., "/a/b/c/platforms/"
 TARGET_PROGRAM="./target/commons-io-2.2-SNAPSHOT" # path to the target jar / apk Soot will read
 
 ####
