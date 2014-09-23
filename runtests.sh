@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TMP_DIR="./tmp/"
+TMP_DIR=`pwd`"/tmp/"
 SOOT_URL="http://vandyk.st.informatik.tu-darmstadt.de/abc/sootclasses.jar"
 SOOT_JAR=${TMP_DIR}/"`basename $SOOT_URL`"
 ANOROID_JARS="/opt/android-platforms/"
