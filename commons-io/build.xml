@@ -147,6 +147,7 @@
              debug="${compile.debug}"
              deprecation="${compile.deprecation}"
              optimize="${compile.optimize}"
+             encoding="UTF-8"
              includeantruntime="false">
           <classpath refid="test.classpath"/>
       </javac>
