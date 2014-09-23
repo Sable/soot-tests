@@ -10,7 +10,7 @@ COMMONS_IO="commons-io"
 # setup 
 rm -f *.status
 rm -rf $TMP_DIR
-wget -P $TMP_DIR http://vandyk.st.informatik.tu-darmstadt.de/abc/sootclasses.jar
+wget -P $TMP_DIR $SOOT_URL
 
 
 # run
