@@ -97,7 +97,11 @@
             <test name="${test.entry}" todir="${test.reports}" if="test.entry"/>
             <batchtest fork="yes" todir="${test.reports}" unless="test.entry">
               <fileset dir="${basedir}/src/test/java/">
+                    <include name="**/DurationFormatUtilsTest.java"/>
+                    <include name="**/MethodUtilsTest.java"/>
+                <!--
                     <include name="**/*Test.java"/>
+                    -->
                     <exclude name="**/Abstract*Test.java"/>
                 </fileset>
             </batchtest>
