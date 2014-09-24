@@ -37,6 +37,8 @@
     <property name="test.failonerror" value="true"/>
     <property name="test.reports" value="${basedir}/test-reports.${commons-lang}/"/>
     <property name="test.output" value="${basedir}/tests.${commons-lang}/"/>
+    <property name="compile.source"          value="1.5"/>
+    <property name="compile.target"          value="1.5"/>
 
     <!-- ========== Construct compile classpath =============================== -->
     <path id="compile.classpath">
