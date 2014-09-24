@@ -31,14 +31,12 @@
     <property file="${basedir}/default.properties"/>
     <property name="jdk.javadoc" value="http://docs.oracle.com/javase/6/docs/api/"/>
     <property name="collections.javadoc" value="http://commons.apache.org/collections/api-release/"/>
-    <property name="compile.target" value="1.6"/>
-    <property name="compile.source" value="6"/>
+    <property name="compile.target" value="1.5"/>
+    <property name="compile.source" value="1.5"/>
     <property name="compile.encoding" value="UTF-8"/>
     <property name="test.failonerror" value="true"/>
     <property name="test.reports" value="${basedir}/test-reports.${commons-lang}/"/>
     <property name="test.output" value="${basedir}/tests.${commons-lang}/"/>
-    <property name="compile.source"          value="1.5"/>
-    <property name="compile.target"          value="1.5"/>
 
     <!-- ========== Construct compile classpath =============================== -->
     <path id="compile.classpath">
