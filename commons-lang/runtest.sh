@@ -4,7 +4,7 @@
 TEST_TARGET=$1   # component to test, e.g., "coffi", "asm", ...
 SOOT_JAR=$2      # path to Soot jar, e.g, "/d/e/f/soot-trunk.jar"
 ANDROID_JARS=$3  # path to Android jars, e.g., "/a/b/c/platforms/"
-TARGET_PROGRAM="./target/commons-io-2.2-SNAPSHOT" # path to the target jar / apk Soot will read
+TARGET_PROGRAM="./target/commons-lang3-3.4-SNAPSHOT" # path to the target jar / apk Soot will read
 
 ####
 # function which:
@@ -24,7 +24,7 @@ R=$?
 echo "soot: "$R
 rm -rf "test-reports."${TEST_TARGET}
 rm -rf "tests."${TEST_TARGET}
-ant -Dcommons-io=$TEST_TARGET test
+ant -Dcommons-lang=$TEST_TARGET test
 R=$(($? + $R))
 echo "ant: "$R
 return $R
