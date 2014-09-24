@@ -1,0 +1,240 @@
+<!--
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+ -->
+<!--
+   "Lang" component of the Apache Commons Subproject
+   $Id$
+-->
+<project name="Lang" default="compile" basedir=".">
+
+    <!-- ========== Initialize Properties ===================================== -->
+    <property file="${user.home}/${component.name}.build.properties"/>
+    <property file="${user.home}/build.properties"/>
+    <property file="${basedir}/build.properties"/>
+    <property file="${basedir}/default.properties"/>
+    <property name="jdk.javadoc" value="http://docs.oracle.com/javase/6/docs/api/"/>
+    <property name="collections.javadoc" value="http://commons.apache.org/collections/api-release/"/>
+    <property name="compile.target" value="1.6"/>
+    <property name="compile.source" value="6"/>
+    <property name="compile.encoding" value="UTF-8"/>
+    <property name="test.failonerror" value="true"/>
+    <property name="test.reports" value="${basedir}/test-reports.${commons-lang}/"/>
+    <property name="test.output" value="${basedir}/tests.${commons-lang}/"/>
+
+    <!-- ========== Construct compile classpath =============================== -->
+    <path id="compile.classpath">
+        <pathelement location="${basedir}/classes"/>
+    </path>
+
+    <!-- ========== Construct unit test classpath ============================= -->
+    <path id="test.classpath">
+      <pathelement location="${basedir}/target.${commons-lang}/"/>
+        <pathelement location="${basedir}/libs/commons-io-2.2-SNAPSHOT.jar"/>
+        <pathelement location="${test.output}"/>
+        <pathelement location="${basedir}/libs/junit-4.11.jar"/>
+        <pathelement location="${basedir}/libs/easymock-3.2.jar"/>
+        <pathelement location="${basedir}/libs/hamcrest-all-1.3.jar"/>
+    </path>
+
+    <!-- ========== Executable Targets ======================================== -->
+    <target name="init" description="Initialize and evaluate conditionals">
+        <echo message="-------- ${component.name} ${component.version} --------"/>
+        <filter token="name" value="${component.name}"/>
+        <filter token="package" value="${component.package}"/>
+        <filter token="version" value="${component.version}"/>
+        <filter token="compile.source" value="${compile.source}"/>
+        <filter token="compile.target" value="${compile.target}"/>
+        <mkdir dir="${basedir}"/>
+    </target>
+
+    <!-- ========== Compile Targets ========================================= -->
+    <target name="compile" depends="init" description="Compile shareable components">
+        <mkdir dir="${basedir}/classes"/>
+        <javac srcdir="${source.home}" destdir="${basedir}/classes" debug="${compile.debug}" deprecation="${compile.deprecation}" target="${compile.target}" source="${compile.source}" excludes="${compile.excludes}" optimize="${compile.optimize}" includeantruntime="false" encoding="${compile.encoding}">
+            <classpath refid="compile.classpath"/>
+        </javac>
+        <copy todir="${basedir}/classes" filtering="on">
+            <fileset dir="${source.home}" excludes="**/*.java,**/*.html"/>
+        </copy>
+    </target>
+
+    <target name="compile.tests"  description="Compile unit test cases">
+      <mkdir dir="${test.output}"/>
+      <javac srcdir="${basedir}/src/test/java/" destdir="${test.output}" debug="${compile.debug}" deprecation="off" target="${compile.target}" source="${compile.source}" optimize="${compile.optimize}" includeantruntime="false" encoding="${compile.encoding}">
+            <classpath refid="test.classpath"/>
+        </javac>
+        
+        <copy todir="${basedir}/tests" filtering="on">
+          <fileset dir="${basedir}/src/test/java/" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <!-- ========== Unit Tests ========================================= -->
+    <target name="test" depends="compile.tests" description="Run all unit test cases">
+        <echo message="Running unit tests ..."/>
+        <mkdir dir="${test.reports}"/>
+        <junit printsummary="true" showoutput="true" fork="yes" haltonfailure="${test.failonerror}">
+            <classpath refid="test.classpath"/>
+            <formatter type="plain" usefile="true" />
+            <!-- If test.entry is defined, run a single test, otherwise run all valid tests -->
+            <test name="${test.entry}" todir="${test.reports}" if="test.entry"/>
+            <batchtest fork="yes" todir="${test.reports}" unless="test.entry">
+              <fileset dir="${basedir}/src/test/java/">
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/Abstract*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="clean" description="Clean build and distribution directories">
+        <delete dir="${basedir}"/>
+    </target>
+
+    <target name="all" depends="clean,test,compile" description="Clean and compile all components"/>
+
+    <!-- ========== JavaDocs ========================================= -->
+    <target name="javadoc" depends="compile" description="Create component Javadoc documentation">
+        <mkdir dir="${basedir}"/>
+        <mkdir dir="${basedir}/apidocs"/>
+        <tstamp>
+            <format property="current.year" pattern="yyyy"/>
+        </tstamp>
+        <javadoc sourcepath="${source.home}"
+                 destdir="${basedir}/apidocs"
+                 overview="${source.home}/org/apache/commons/lang3/overview.html"
+                 packagenames="org.apache.commons.*"
+                 excludepackagenames="${javadoc.excludepackagenames}"
+                 author="false"
+                 version="true"
+                 doctitle="&lt;h1&gt;Commons Lang ${component.version}&lt;/h1&gt;"
+                 windowtitle="Lang ${component.version}"
+                 bottom="Copyright &amp;copy; 2001-${current.year} - Apache Software Foundation"
+                 use="true"
+                 encoding="${compile.encoding}"
+                 source="${compile.source}">
+            <classpath refid="compile.classpath"/>
+            <link href="${jdk.javadoc}"/>
+            <link href="${collections.javadoc}"/>
+        </javadoc>
+    </target>
+
+    <!-- ========== Jar Targets ========================================= -->
+    <target name="jar" depends="compile" description="Create jar">
+        <mkdir dir="${basedir}/classes/META-INF"/>
+        <copy file="LICENSE.txt" tofile="${basedir}/classes/META-INF/LICENSE.txt"/>
+        <copy file="NOTICE.txt"  tofile="${basedir}/classes/META-INF/NOTICE.txt"/>
+        <jar jarfile="${basedir}/${final.name}.jar">
+            <manifest>
+                <attribute name="Specification-Title" value="Commons Lang"/>
+                <attribute name="Specification-Version" value="${component.version}"/>
+                <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Title" value="Commons Lang"/>
+                <attribute name="Implementation-Version" value="${component.version}"/>
+                <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Vendor-Id" value="org.apache"/>
+                <attribute name="X-Compile-Source-JDK" value="${compile.source}"/>
+                <attribute name="X-Compile-Target-JDK" value="${compile.target}"/>
+            </manifest>
+            <fileset dir="${basedir}/classes">
+                <include name="**/*.class"/>
+                <include name="**/LICENSE.txt"/>
+                <include name="**/NOTICE.txt"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="javadoc-jar" depends="javadoc" description="Create JavaDoc jar">
+        <jar jarfile="${basedir}/${final.name}-javadoc.jar">
+            <manifest>
+                <attribute name="Specification-Title" value="Commons Lang API"/>
+                <attribute name="Specification-Version" value="${component.version}"/>
+                <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Title" value="Commons Lang API"/>
+                <attribute name="Implementation-Version" value="${component.version}"/>
+                <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Vendor-Id" value="org.apache"/>
+            </manifest>
+            <fileset dir="${basedir}/apidocs"/>
+            <fileset dir="${basedir}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="source-jar" depends="init" description="Create JavaDoc jar">
+        <jar jarfile="${basedir}/${final.name}-sources.jar">
+            <manifest>
+                <attribute name="Specification-Title" value="Commons Lang Source"/>
+                <attribute name="Specification-Version" value="${component.version}"/>
+                <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Title" value="Commons Lang Source"/>
+                <attribute name="Implementation-Version" value="${component.version}"/>
+                <attribute name="Implementation-Vendor" value="The Apache Software Foundation"/>
+                <attribute name="Implementation-Vendor-Id" value="org.apache"/>
+            </manifest>
+            <fileset dir="${source.home}">
+                <include name="**/*.java"/>
+            </fileset>
+            <fileset dir="${basedir}">
+                <include name="LICENSE.txt"/>
+                <include name="NOTICE.txt"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <!-- ========== Distribution ========================================= -->
+    <target name="dist" depends="clean,jar,source-jar,javadoc-jar" description="Create binary distribution">
+
+        <!-- binary distro -->
+        <zip destfile="${basedir}/${final.name}.zip">
+            <zipfileset dir="${basedir}" prefix="${final.name}"
+                      includes="LICENSE.txt,
+                                NOTICE.txt,
+                                RELEASE-NOTES.txt"
+             />
+            <zipfileset dir="${basedir}" includes="*.jar," prefix="${final.name}"/>
+            <zipfileset dir="${basedir}/apidocs" prefix="${final.name}/apidocs"/>
+        </zip>
+        <tar destfile="${basedir}/${final.name}.tar.gz" compression="gzip">
+            <zipfileset src="${basedir}/${final.name}.zip"/>
+        </tar>
+
+        <!-- source distro -->
+        <zip destfile="${basedir}/${final.name}-src.zip">
+            <zipfileset dir="${basedir}" prefix="${final.name}-src"
+                      includes="build.xml,
+                                build.xml,
+                                checkstyle.xml,
+                                default.properties,
+                                LICENSE.txt,
+                                NOTICE.txt,
+                                pom.xml,
+                                RELEASE-NOTES.txt"
+             />
+            <zipfileset dir="${basedir}/src"   prefix="${final.name}-src/src"/>
+        </zip>
+        <tar destfile="${basedir}/${final.name}-src.tar.gz" compression="gzip">
+            <zipfileset src="${basedir}/${final.name}-src.zip"/>
+        </tar>
+
+    </target>
+</project>
