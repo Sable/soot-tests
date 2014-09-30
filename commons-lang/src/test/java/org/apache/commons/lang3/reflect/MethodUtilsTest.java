@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -436,7 +437,12 @@ public class MethodUtilsTest {
                 MethodUtilsTest.class.getMethod("testGetMethodsWithAnnotation"),
                 MethodUtilsTest.class.getMethod("testGetMethodsListWithAnnotation")
         };
-        assertArrayEquals(annotatedMethods, MethodUtils.getMethodsWithAnnotation(MethodUtilsTest.class, Annotated.class));
+        Method[] methodArray = MethodUtils.getMethodsWithAnnotation(MethodUtilsTest.class, Annotated.class);
+        List<Method> methodList = java.util.Arrays.asList(methodArray);
+        assertTrue(methodList.contains(annotatedMethods[0]));
+        assertTrue(methodList.contains(annotatedMethods[1]));
+        assertEquals(2, methodArray.length); // there are two methods in annotatedMethods
+        assertEquals(2, methodList.size());
     }
 
     @Test(expected = IllegalArgumentException.class)
