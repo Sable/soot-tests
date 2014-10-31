@@ -142,9 +142,9 @@
     <pathelement location="${basedir}/test/"/>
     <pathelement location="${basedir}/src/test-files/"/>
     <pathelement location="${basedir}/benchmark/classes/test/conf/"/>
-    <pathelement location="${basedir}/target/test-resources"/>
-    <!--
     <pathelement location="${basedir}/src/resources"/>
+    <!--
+    <pathelement location="${basedir}/target/test-resources"/>
     <pathelement location="${basedir}/target/other_projects/test_files.clean/"/>
     -->
     <!--<pathelement location="./libs/ant-1.8.2.jar"/>-->
