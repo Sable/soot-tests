@@ -67,7 +67,7 @@
   <property name="target.classes"             value="${basedir}/target.${lucene}"/>
 
   <!-- The base directory for unit test resources -->
-  <property name="test.resources.home"               value="src/test/resources"/>
+  <property name="test.resources.home"               value="${basedir}/test/resources"/>
 
   <!-- Download lib dir -->
   <property name="download.lib.dir"        value="libs"/>
@@ -139,12 +139,14 @@
     <pathelement location="${basedir}/demo/classes/java/"/>
     -->
     <pathelement location="${test.classes}"/>
-    <pathelement location="${basedir}/src/test/"/>
+    <pathelement location="${basedir}/test/"/>
     <pathelement location="${basedir}/src/test-files/"/>
     <pathelement location="${basedir}/benchmark/classes/test/conf/"/>
     <pathelement location="${basedir}/target/test-resources"/>
+    <!--
     <pathelement location="${basedir}/src/resources"/>
     <pathelement location="${basedir}/target/other_projects/test_files.clean/"/>
+    -->
     <!--<pathelement location="./libs/ant-1.8.2.jar"/>-->
 <pathelement location="./libs/antlr-runtime-3.5.jar"/>
 <pathelement location="./libs/asm-4.1.jar"/>
