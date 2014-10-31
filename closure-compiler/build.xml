@@ -47,7 +47,6 @@
   <property name="closure.build.dir" value="${basedir}/build" />
   <property name="build.dir" value="${closure.build.dir}" />
   <property name="buildlib.dir" value="${build.dir}/lib" />
-  <property name="build.test" value="${basedir}/build-test/" />
   <property name="classes.dir" value="${basedir}/target.${targetdir}/" />
   <property name="testClasses.dir" value="${basedir}/tests-${targetdir}/" />
   <property name="javadoc.dir" value="${build.dir}/javadoc" />
@@ -121,7 +120,6 @@
   </path>
 
   <path id="allclasspath.path">
-    <pathelement location="${build.test}" />
     <pathelement location="${classes.dir}" />
     <pathelement location="${testClasses.dir}" />
     <fileset dir="${lib.dir}">
