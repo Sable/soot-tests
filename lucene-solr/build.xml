@@ -1,0 +1,278 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+   
+         http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project name="Commons IO" default="jar" basedir=".">
+
+
+<!--
+        "IO" component of the Apache Commons Subproject
+        $Id: build.xml 1613938 2014-07-28 09:33:01Z sebb $
+-->
+
+
+<!-- ========== Initialize Properties ===================================== -->
+
+
+  <property file="project.properties"/>              <!-- Project local   -->
+  <property file="build.properties"/>                <!-- Component local   -->
+  <property file="${user.home}/build.properties"/>   <!-- User local        -->
+
+
+<!-- ========== External Dependencies ===================================== -->
+
+  <!-- Repository base path -->
+  <property name="repository"              value="${user.home}/.m2/repository"/>
+
+  <!-- The directories corresponding to your necessary dependencies -->
+  <property name="junit.version"           value="4.10"/>
+  <property name="junit.home"              value="${repository}/junit/junit/${junit.version}"/>
+  <property name="junit.jar"               value="${junit.home}/junit-${junit.version}.jar"/>
+
+
+<!-- ========== Component Declarations ==================================== -->
+
+
+  <!-- The name of this component -->
+  <property name="component.name"          value="commons-io"/>
+
+  <!-- The primary package name of this component -->
+  <property name="component.package"       value="org.apache.commons.io"/>
+
+  <!-- The title of this component -->
+  <property name="component.title"         value="Commons IO"/>
+
+  <!-- The current version number of this component -->
+  <property name="component.version"       value="2.2-SNAPSHOT"/>
+
+  <!-- The base directory for component sources -->
+  <property name="source.home"             value="src/java"/>
+
+  <!-- The base directory for unit test sources --> 
+  <property name="test.home"                  value="${basedir}/test/"/>
+  <property name="test.classes"               value="${basedir}/tests.${lucene}/"/>
+  <property name="test.reports"               value="${basedir}/test-reports.${lucene}/"/>
+  <property name="target.classes"             value="${basedir}/target.${lucene}"/>
+
+  <!-- The base directory for unit test resources -->
+  <property name="test.resources.home"               value="src/test/resources"/>
+
+  <!-- Download lib dir -->
+  <property name="download.lib.dir"        value="libs"/>
+
+  <!-- The base directory for compilation targets -->
+  <property name="build.home"              value="target"/>
+
+  <!-- The base directory for distribution targets -->
+  <property name="dist.home"               value="${build.home}"/>
+
+  <!-- Base file name for dist files -->
+  <property name="final.name"        value="${component.name}-${component.version}"/>
+
+  <!-- Directory where binary release files are staged -->
+  <property name="stage.bin.dir"           value="${dist.home}/stage-bin"/>
+
+  <!-- Directory where source release files are staged -->
+  <property name="stage.src.dir"           value="${dist.home}/stage-src"/>
+
+<!-- ========== Compiler Defaults ========================================= -->
+
+  <!-- compiler source JDK version -->
+  <property name="compile.source"          value="1.7"/>
+
+  <!-- compiler target JDK version -->
+  <property name="compile.target"          value="1.7"/>
+
+  <!-- Should Java compilations set the 'debug' compiler option? -->
+  <property name="compile.debug"           value="true"/>
+
+  <!-- Should Java compilations set the 'deprecation' compiler option? -->
+  <property name="compile.deprecation"     value="false"/>
+
+  <!-- Should Java compilations set the 'optimize' compiler option? -->
+  <property name="compile.optimize"        value="true"/>
+
+  <!-- Construct compile classpath -->
+  <path id="compile.classpath">
+    <pathelement location="${build.home}/classes"/>
+  </path>
+
+  <!-- Construct compile classpath -->
+  <path id="downloaded.lib.classpath">
+    <pathelement location="${download.lib.dir}/junit-${junit.version}.jar"/>
+  </path>
+
+<!-- ========== Test Execution Defaults =================================== -->
+
+
+  <!-- Construct unit test classpath -->
+  <path id="test.classpath">
+    <!--
+    -->
+    <pathelement location="${target.classes}"/>
+    <!-- -->
+    <!--
+    <pathelement location="target/lucene-all-6.0.0-SNAPSHOT.jar"/>
+    -->
+    <!--
+    <pathelement location="${basedir}/test-framework/classes/java/"/>
+    <pathelement location="${basedir}/benchmark/classes/java/"/>
+    <pathelement location="${basedir}/replicator/classes/java/"/>
+    <pathelement location="${basedir}/backward-codecs/classes/java/"/>
+    <pathelement location="${basedir}/classification/classes/java/"/>
+    <pathelement location="${basedir}/tools/classes/java/"/>
+    <pathelement location="${basedir}/join/classes/java/"/>
+    <pathelement location="${basedir}/suggest/classes/java/"/>
+    <pathelement location="${basedir}/spatial/classes/java/"/>
+    <pathelement location="${basedir}/demo/classes/java/"/>
+    -->
+    <pathelement location="${test.classes}"/>
+    <pathelement location="${basedir}/src/test/"/>
+    <pathelement location="${basedir}/src/test-files/"/>
+    <pathelement location="${basedir}/benchmark/classes/test/conf/"/>
+    <pathelement location="${basedir}/target/test-resources"/>
+    <pathelement location="${basedir}/src/resources"/>
+    <pathelement location="${basedir}/target/other_projects/test_files.clean/"/>
+    <!--<pathelement location="./libs/ant-1.8.2.jar"/>-->
+<pathelement location="./libs/antlr-runtime-3.5.jar"/>
+<pathelement location="./libs/asm-4.1.jar"/>
+<pathelement location="./libs/asm-commons-4.1.jar"/>
+<pathelement location="./libs/commons-codec-1.9.jar"/>
+<pathelement location="./libs/commons-compress-1.8.1.jar"/>
+<pathelement location="./libs/commons-logging-1.1.3.jar"/>
+<pathelement location="./libs/httpclient-4.3.1.jar"/>
+<pathelement location="./libs/httpcore-4.3.jar"/>
+<pathelement location="./libs/icu4j-53.1.jar"/>
+<pathelement location="./libs/ivy-2.3.0.jar"/>
+<pathelement location="./libs/jakarta-regexp-1.4.jar"/>
+<pathelement location="./libs/javax.servlet-3.0.0.v201112011016.jar"/>
+<pathelement location="./libs/jetty-continuation-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/jetty-http-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/jetty-io-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/jetty-server-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/jetty-servlet-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/jetty-util-8.1.10.v20130312.jar"/>
+<pathelement location="./libs/junit-4.10.jar"/>
+<pathelement location="./libs/junit4-ant-2.1.6.jar"/>
+<pathelement location="./libs/morfologik-fsa-1.7.1.jar"/>
+<pathelement location="./libs/morfologik-polish-1.7.1.jar"/>
+<pathelement location="./libs/morfologik-stemming-1.7.1.jar"/>
+<pathelement location="./libs/nekohtml-1.9.17.jar"/>
+<pathelement location="./libs/randomizedtesting-runner-2.1.6.jar"/>
+<pathelement location="./libs/servlet-api-2.4.jar"/>
+<pathelement location="./libs/spatial4j-0.4.1.jar"/>
+<pathelement location="./libs/Tagger-2.3.1.jar"/>
+<pathelement location="./libs/uimaj-core-2.3.1.jar"/>
+<pathelement location="./libs/WhitespaceTokenizer-2.3.1.jar"/>
+<pathelement location="./libs/xercesImpl-2.9.1.jar"/>
+
+<!--  <path refid="downloaded.lib.classpath"/>-->
+  </path>
+
+  <!-- Should all tests fail if one does? -->
+  <property name="test.failonerror"        value="true"/>
+
+  <!-- The test runner to execute -->
+  <property name="test.runner"             value="junit.textui.TestRunner"/>
+
+
+<!-- ========== Unit Test Targets ========================================= -->
+
+    <target name="compile.tests" description="Compile unit test cases dependent on JDK version">
+
+    <mkdir dir="${test.classes}"/>
+      <javac srcdir="${test.home}"
+            destdir="${test.classes}"
+             debug="${compile.debug}"
+             deprecation="${compile.deprecation}"
+             optimize="${compile.optimize}"
+             includeantruntime="false"
+             target="${compile.target}"
+             source="${compile.source}">
+          <classpath refid="test.classpath"/>
+      </javac>
+      <!--<copy todir="${build.home}/test-resources">
+        <fileset dir="${test.resources.home}"/>
+      </copy>
+      -->
+      <copy todir="${test.classes}/conf/">
+        <fileset dir="${basedir}/src/conf/">
+          <include name="**/*.class"/>
+          <include name="**/*.alg"/>
+        </fileset>
+      </copy>
+      <copy todir="${target.classes}/META-INF/">
+        <fileset dir="${basedir}/target/META-INF/">
+          <include name="**/*"/>
+        </fileset>
+      </copy>
+      <!--
+      <copy todir="${target.classes}/org/">
+        <fileset dir="${basedir}/target/other_projects/test_files.clean/org/">
+          <include name="**/*"/>
+        </fileset>
+      </copy>
+      -->
+    </target>
+
+  <target name="test"  depends="compile.tests"
+                       description="Run all unit test cases">
+                       <mkdir dir="${test.reports}"/>
+    <junit printsummary="true" showoutput="true" fork="yes" haltonfailure="${test.failonerror}">
+            <assertions>
+              <!-- <enable package="org.apache"/>-->
+          <enable  package="org.apache.lucene"/>
+          <disable package="org.apache.lucene.index"/>
+        </assertions>
+       
+      <classpath refid="test.classpath"/>
+      <formatter type="plain" usefile="true" />
+      <!-- If test.entry is defined, run a single test, otherwise run all valid tests -->
+      <test name="${test.entry}" if="test.entry"/>
+      <batchtest todir="${test.reports}" unless="test.entry">
+        <fileset dir="${test.home}">
+          <!--
+          <include name="**/TestDocIdBitSet.java"/> 
+          <include name="**/TestIndexWriterOutOfMemory.java"/> 
+          -->
+           <include name="**/*Test.java"/>
+          <include name="**/Test*.java"/>
+          <!--
+          -->
+
+          <!-- <include name="**/TestBackwardsCompatibility.java"/>  the dalvik version of lucene has a trap at the very end of the code in IndexWriter<init>. This test cases can test that soot correctly handles it-->
+          <exclude name="**/TestIndexWriterExceptions2.java"/> <!-- when soot reads dalvik it checks if an invoke is done on a reference which can only be null. If it is the case, Soot replace the invoke statement by another statement throwing an exception. This test case checks for a specific exception message... -->
+          <exclude name="**/TestSimpleSearchEquivalence.java"/> <!-- major version 48 in org/apache/lucene/search/SearchEquivalenceTestBase does not work, but 49 does -->
+          <exclude name="**/TestSloppyPhraseQuery2.java"/> <!-- major version 48 in org/apache/lucene/search/SearchEquivalenceTestBase does not work, but 49 does -->
+          <exclude name="**/TestSpanSearchEquivalence.java"/> <!-- major version 48 in org/apache/lucene/search/SearchEquivalenceTestBase does not work, but 49 does -->
+          <exclude name="**/TestBooleanMinShouldMatch.java"/> <!-- major version 48 in org/apache/lucene/search/SearchEquivalenceTestBase does not work, but 49 does -->
+          <exclude name="**/TestParallelCompositeReader.java"/> <!-- possible bug in isAnonymousClass()? -->
+          <exclude name="**/TestDocumentsWriterStallControl.java"/> <!-- fails -->
+          <exclude name="**/TestFlushByRamOrCountsPolicy.java"/> <!-- fails -->
+          <exclude name="**/TestIndexWriter.java"/> <!-- takes too long to complete -->
+          <exclude name="**/TestIndexWriterExceptions.java"/> <!-- does not generate exception -->
+          <!-- Test support files -->
+          <exclude name="**/testtools/**"/>
+          <!-- Ant JUnit does not handle abstract classes -->
+          <exclude name="**/*AbstractTestCase*"/>
+          <exclude name="**/Abstract*TestCase*"/>
+
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+
+</project>
+
