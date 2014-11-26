@@ -19,7 +19,7 @@ SOOT_OPTIONS=$2
 
 rm -rf $SOOT_OUTPUT_DIR
 mkdir $SOOT_OUTPUT_DIR
-java -jar $SOOT_JAR -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR
+java -jar $SOOT_JAR -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR -validate
 R=$?
 echo "soot: "$R
 rm -rf "test-reports."${TEST_TARGET}
