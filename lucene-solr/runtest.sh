@@ -8,7 +8,7 @@ TARGET_PROGRAM="./target/lucene-all-6.0.0-SNAPSHOT" # path to the target jar / a
 
 ####
 # function which:
-# 1) starts Soot to generate output 
+# 1) starts Soot to generate output
 # 2) then runs the test cases on the generated output
 ####
 launch_tests () {
@@ -35,18 +35,23 @@ R=0
 
 if [ "$TEST_TARGET" == "coffi" ]; then
   # launch for coffi
-  launch_tests "${TARGET_PROGRAM}.jar" "-coffi -f class -keep-line-number " 
+  launch_tests "${TARGET_PROGRAM}.jar" "-coffi -f class -keep-line-number "
   R=$(($? + $R))
 
-elif [ "$TEST_TARGET" == "asm" ]; then 
+elif [ "$TEST_TARGET" == "asm" ]; then
   # launch for asm
-  launch_tests "${TARGET_PROGRAM}.jar" " -f class" 
+  launch_tests "${TARGET_PROGRAM}.jar" " -f class"
   R=$(($? + $R))
 
 elif [ "$TEST_TARGET" == "dexpler" ]; then
   # launch for dexpler
-  launch_tests "${TARGET_PROGRAM}.apk" "-src-prec apk -f class -android-jars $ANDROID_JARS" 
+  launch_tests "${TARGET_PROGRAM}.apk" "-src-prec apk -f class -android-jars $ANDROID_JARS"
   R=$(($? + $R))
+
+elif [ "$TEST_TARGET" == "asm-backend" ]; then
+    # launch for asm-backend
+    launch_tests "${TARGET_PROGRAM}.jar" "-asm-backend -f class"
+    R=$(($? + $R))
 
 else
   echo "Wrong test target '"${TEST_TARGET}"' !"
@@ -54,4 +59,3 @@ else
 fi
 
 exit $R
-
