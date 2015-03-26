@@ -8,7 +8,7 @@ TARGET_PROGRAM="./target/compiler" # path to the target jar / apk Soot will read
 
 ####
 # function which:
-# 1) starts Soot to generate output
+# 1) starts Soot to generate output 
 # 2) then runs the test cases on the generated output
 ####
 launch_tests () {
@@ -19,7 +19,7 @@ SOOT_OPTIONS=$2
 
 rm -rf $SOOT_OUTPUT_DIR
 mkdir $SOOT_OUTPUT_DIR
-java -jar $SOOT_JAR -keep-line-number -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR -validate
+java -cp $CLASSPATH soot.Main -keep-line-number -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR -validate
 R=$?
 echo "soot: "$R
 rm -rf "test-reports."${TEST_TARGET}
@@ -35,17 +35,17 @@ R=0
 
 if [ "$TEST_TARGET" == "coffi" ]; then
   # launch for coffi
-  launch_tests "${TARGET_PROGRAM}.jar" "-coffi -f class"
+  launch_tests "${TARGET_PROGRAM}.jar" "-coffi -f class" 
   R=$(($? + $R))
 
-elif [ "$TEST_TARGET" == "asm" ]; then
+elif [ "$TEST_TARGET" == "asm" ]; then 
   # launch for asm
-  launch_tests "${TARGET_PROGRAM}.jar" " -f class"
+  launch_tests "${TARGET_PROGRAM}.jar" " -f class" 
   R=$(($? + $R))
 
 elif [ "$TEST_TARGET" == "dexpler" ]; then
   # launch for dexpler
-  launch_tests "${TARGET_PROGRAM}.apk" "-src-prec apk -f class -android-jars $ANDROID_JARS"
+  launch_tests "${TARGET_PROGRAM}.apk" "-src-prec apk -f class -android-jars $ANDROID_JARS" 
   R=$(($? + $R))
 elif [ "$TEST_TARGET" == "asm-backend" ]; then
     # launch for asm-backend
@@ -58,3 +58,4 @@ else
 fi
 
 exit $R
+

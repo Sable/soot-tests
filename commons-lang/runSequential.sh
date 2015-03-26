@@ -17,8 +17,8 @@ R=0
 R=$(($? + $R))
 ./runtest.sh "asm" "$SOOT_JAR" "$ANDROID_JARS" &> "${TARGET}.asm.out"
 R=$(($? + $R))
-./runtest.sh "dexpler" "$SOOT_JAR" "$ANDROID_JARS" &> "${TARGET}.dexpler.out"
-R=$(($? + $R))
+#./runtest.sh "dexpler" "$SOOT_JAR" "$ANDROID_JARS" &> "${TARGET}.dexpler.out"
+#R=$(($? + $R))
 ./runtest.sh "asm-backend" "$SOOT_JAR" "$ANDROID_JARS" &> "${TARGET}.asm-backend.out"
 R=$(($? + $R))
 
