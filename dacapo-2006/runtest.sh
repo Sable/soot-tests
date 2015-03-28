@@ -49,7 +49,7 @@ elif [ "$TEST_TARGET" == "dexpler" ]; then
   R=$(($? + $R))
 elif [ "$TEST_TARGET" == "asm-backend" ]; then
   # launch for asm-backend
-  launch_tests "${TARGET_PROGRAM}.jar" "-asm-backend -f class -java-version 7"
+  launch_tests "${TARGET_PROGRAM}.jar" "-asm-backend -f class"
   R=$(($? + $R))
 
 else

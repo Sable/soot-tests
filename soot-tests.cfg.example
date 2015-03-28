@@ -1,0 +1,3 @@
+SOOT_PATH="../../ICAProject/lib/soot-trunk.jar"
+SOOT_SRC_PATH="../../ICAProject/lib/sootsources-trunk.jar"
+SOOT_BUILD_FILE="../../ICAProject/build.xml"
