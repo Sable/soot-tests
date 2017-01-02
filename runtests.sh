@@ -11,7 +11,8 @@ ANDROID_JARS="/opt/android-platforms/"
 # setup 
 rm -f *.status
 rm -rf $TMP_DIR
-wget -P $TMP_DIR $SOOT_URL
+# Do not download the JAR, but use the manually-provided one
+# wget -P $TMP_DIR $SOOT_URL
 
 
 # run
