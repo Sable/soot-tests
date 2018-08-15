@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-TEST_TARGET=$1   # component to test, e.g., "coffi", "asm", ...
+TEST_TARGET=$1   # component to test, e.g., "dexpler", "asm", ...
 SOOT_JAR=$2      # path to Soot jar, e.g, "/d/e/f/soot-trunk.jar"
 ANDROID_JARS=$3  # path to Android jars, e.g., "/a/b/c/platforms/"
 TARGET_PROGRAM="./target/commons-lang3-3.4-SNAPSHOT" # path to the target jar / apk Soot will read
@@ -33,12 +33,7 @@ return $R
 
 R=0
 
-if [ "$TEST_TARGET" == "coffi" ]; then
-  # launch for coffi
-  launch_tests "${TARGET_PROGRAM}.jar" "-coffi -f class" 
-  R=$(($? + $R))
-
-elif [ "$TEST_TARGET" == "asm" ]; then 
+if [ "$TEST_TARGET" == "asm" ]; then 
   # launch for asm
   launch_tests "${TARGET_PROGRAM}.jar" " -f class" 
   R=$(($? + $R))
