@@ -1,0 +1,9 @@
+*.class
+*.txt
+*.out
+*.alg
+*.status
+/generated/
+/report/
+/soot-tests.cfg
+/coverage.xml

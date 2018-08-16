@@ -19,7 +19,7 @@ SOOT_OPTIONS=$2
 
 rm -rf $SOOT_OUTPUT_DIR
 mkdir $SOOT_OUTPUT_DIR
-java -jar $SOOT_JAR -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR -validate
+java -Xmx4096m -cp $CLASSPATH soot.Main -allow-phantom-refs $SOOT_OPTIONS -process-dir $SOOT_INPUT -d $SOOT_OUTPUT_DIR -validate
 R=$?
 echo "soot: "$R
 rm -rf "test-reports."${TEST_TARGET}
@@ -42,6 +42,11 @@ elif [ "$TEST_TARGET" == "dexpler" ]; then
   # launch for dexpler
   launch_tests "${TARGET_PROGRAM}.apk" "-src-prec apk -f class -android-jars $ANDROID_JARS" 
   R=$(($? + $R))
+
+elif [ "$TEST_TARGET" == "asm-backend" ]; then
+    # launch for asm-backend
+    launch_tests "${TARGET_PROGRAM}.jar" "-asm-backend -f class"
+    R=$(($? + $R))
 
 else
   echo "Wrong test target '"${TEST_TARGET}"' !"
